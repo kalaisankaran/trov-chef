@@ -126,9 +126,9 @@ bash "give_the access permission" do
       user "root"
       cwd "#{app_root}"
       code <<-EOF
-	chmod -R 777 /var/www/conf
-	chmod -R 777 /var/www/uploads
-	chmod -R 777 /var/www/cache
+	    chmod -R 777 /var/www/conf
+	    chmod -R 777 /var/www/uploads
+	    chmod -R 777 /var/www/cache
       EOF
 end
 
@@ -146,8 +146,8 @@ end
 ###############################################################################
 # Restart the vanilla apache 2 web server
 ###############################################################################
-service node['apache']['package'] do
-    action :restart
+execute "restart apache service" do
+   command "/etc/init.d/apache2 restart"
 end
  
 
