@@ -1,0 +1,43 @@
+<?php if (!defined('APPLICATION')) exit();
+
+// Conversations
+$Configuration['Conversations']['Version'] = '2.0.18.8';
+
+// Database
+$Configuration['Database']['Name'] = 'vanilla';
+$Configuration['Database']['Host'] = <%= node['config']['bm_mysqlhost'] %>;
+$Configuration['Database']['User'] = 'vanilla';
+$Configuration['Database']['Password'] = 'PassWord';
+
+// EnabledApplications
+$Configuration['EnabledApplications']['Conversations'] = 'conversations';
+$Configuration['EnabledApplications']['Vanilla'] = 'vanilla';
+
+// EnabledPlugins
+$Configuration['EnabledPlugins']['GettingStarted'] = 'GettingStarted';
+$Configuration['EnabledPlugins']['HtmLawed'] = 'HtmLawed';
+
+// Garden
+$Configuration['Garden']['Title'] = 'Vanilla 2';
+$Configuration['Garden']['Cookie']['Salt'] = 'ME5V4YJOQI';
+$Configuration['Garden']['Cookie']['Domain'] = '';
+$Configuration['Garden']['Registration']['ConfirmEmail'] = TRUE;
+$Configuration['Garden']['Email']['SupportName'] = 'Vanilla 2';
+$Configuration['Garden']['Version'] = '2.0.18.8';
+$Configuration['Garden']['RewriteUrls'] = FALSE;
+$Configuration['Garden']['CanProcessImages'] = TRUE;
+$Configuration['Garden']['Installed'] = TRUE;
+$Configuration['Garden']['InstallationID'] = 'B187-DBCCB3B5-E43E8726';
+$Configuration['Garden']['InstallationSecret'] = '0511a9707e7330832b0e268a725c1d6dc0441d54';
+
+// Plugins
+$Configuration['Plugins']['GettingStarted']['Dashboard'] = '1';
+$Configuration['Plugins']['GettingStarted']['Discussion'] = '1';
+
+// Routes
+$Configuration['Routes']['DefaultController'] = 'discussions';
+
+// Vanilla
+$Configuration['Vanilla']['Version'] = '2.0.18.8';
+
+// Last edited by sankar (122.166.206.60)2016-03-02 06:25:07
