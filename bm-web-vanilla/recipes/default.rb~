@@ -9,64 +9,10 @@
 ###############################################################################
 # Search for DB server for the stack being launched and get it's IP address
 ###############################################################################
-
-###############################################################################
-# Important this match relies on the MySQL server ending in "vanilla-web-vm-*"
-###############################################################################
-
-log "*** The Vanilla Web Application Server node name is #{node.name} ***"
-
-# Get the stack name from the node name
-string="(^.+)-vanilla-web$"
-match_result=node.name.match(string)
-if (match_result.captures[0].nil?)
-    Chef::Application.fatal!("*** Unable to locate the vanilla Web Server using string #{string}! ***")
-end   
-
-stack_name=match_result.captures[0]
-log "*** The stack name is #{stack_name} ***"
-
-# Set the config attribute sitename with the stack name
-node.default['config']['sitename'] = "'#{stack_name}'"
-
-###############################################################################
-# Important this search relies on the MySQL server ending in "vanilla-mysql-vm*"
-###############################################################################
-log "*** Searching the Chef server for the MySQL server\'s IP Address using #{stack_name}-vanilla-mysql-vm* as the node name. ***"
-
-mysql_ip_address = ""
-mysql_hostname = ""
-
-retry_counter = 1;
-
-# This search will check for the MySQL Server's IP address up to 20 times, sleeping 30 seconds between intervals
-while ((mysql_ip_address.nil? || mysql_ip_address == "") && retry_counter < 20)
- 
-  db_vm = search(:node , "name:#{stack_name}-vanilla-db\*")
-  db_vm.each do |db_node|
-
-    mysql_ip_address = db_node["ipaddress"]
-    mysql_hostname   = db_node["hostname"]
-
-    break if !mysql_ip_address.nil? && mysql_ip_address != ""
-
-  end
-
-  break if !mysql_ip_address.nil? && mysql_ip_address != ""
-
-  log "*** Chef search returned a \"blank\" value for the MySQL server\'s IP address, sleeping for 30 seconds.... ***"
-  sleep(30)
-  retry_counter += 1
-
-end  
-
-if mysql_ip_address.nil? || mysql_ip_address == ""
-  Chef::Application.fatal!("*** Unable to get the IP address for the MySQL node! ***")
-else
-  log "*** The MySQL database server #{mysql_hostname } has IP address #{mysql_ip_address} ***"
-  node.default['config']['bm_mysqlhost'] =  "'#{mysql_ip_address}'"
-end 
-
+data = data_bag_item('sankars', 'db_info')
+db_ip = data['db_ip']
+log "Database IP => #{db_ip}"
+node.default['config']['bm_mysqlhost'] =  "'#{db_ip}'"
 #######################################################################################################################
 # Update the repository up to date
 #######################################################################################################################
@@ -126,9 +72,9 @@ bash "give_the access permission" do
       user "root"
       cwd "#{app_root}"
       code <<-EOF
-	chmod -R 777 /var/www/conf
-	chmod -R 777 /var/www/uploads
-	chmod -R 777 /var/www/cache
+	    chmod -R 777 /var/www/conf
+	    chmod -R 777 /var/www/uploads
+	    chmod -R 777 /var/www/cache
       EOF
 end
 
@@ -146,8 +92,8 @@ end
 ###############################################################################
 # Restart the vanilla apache 2 web server
 ###############################################################################
-service node['apache']['package'] do
-    action :restart
+execute "restart apache service" do
+   command "/etc/init.d/apache2 restart"
 end
  
 

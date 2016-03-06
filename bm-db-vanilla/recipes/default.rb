@@ -7,6 +7,15 @@
 # All rights reserved - Do Not Redistribute
 #
 
+########################################################
+# Update data base Ip in databags
+########################################################
+# #To edit the contents of a data bag item from a recipe:
+database_ip = data_bag_item('sankars', 'db_info')
+database_ip['db_ip'] = node['ipaddress']
+database_ip['hostname'] = node['hostname']
+database_ip.save
+
 #######################################################################################################################
 # Main Entry of the Recipe
 #######################################################################################################################
