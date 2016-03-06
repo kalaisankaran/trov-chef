@@ -39,8 +39,8 @@ end
 ########################################################################################################################
 template "/tmp/bm_vanilla.sql" do
     source "bm_vanilla.sql"
-    owner "root"
-    group "root"
+    #owner "root"
+    #group "root"
     mode "0644"
     action :create
 end
@@ -62,7 +62,7 @@ end
 ########################################################################################################################
 execute "load_database" do
     command "mysql -uroot vanilla < /tmp/bm_vanilla.sql"
-    only_if { !node.default['config']['mysql_database_load_file'].nil? && node.default['config']['mysql_database_load_file'] != "" }
+    #only_if { !node.default['config']['mysql_database_load_file'].nil? && node.default['config']['mysql_database_load_file'] != "" }
 end
 
 ########################################################################################################################

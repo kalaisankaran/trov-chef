@@ -57,7 +57,7 @@ end
 # Extract the vanilla code
 ###############################################################################
 bash "unpack_vanilla" do
-      user "root"
+      #user "root"
       cwd "#{app_root}"
       code <<-EOF
       unzip #{app_root}/vanilla.zip
@@ -70,8 +70,8 @@ end
 ###############################################################################
 template "#{app_root}/conf/config.php" do
     source "config.php.erb"
-    owner "root"
-    group "root"
+    #owner "root"
+    #group "root"
     mode "0644"
     action :create
 end
@@ -79,7 +79,7 @@ end
 # Make the apache user the owner of all of the files in the virtual host site directory
 #######################################################################################################################
 bash "give_the access permission" do
-      user "root"
+      #user "root"
       cwd "#{app_root}"
       code <<-EOF
       chmod -R 777 /var/www/conf
