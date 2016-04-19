@@ -7,10 +7,28 @@
 # All rights reserved - Do Not Redistribute
 #
 
-
 ########################################################
 # Update data base Ip in databags
 ########################################################
+#To create a data bag from a recipe:
+########################################################
+#users = Chef::DataBag.new
+#users.name('sankars')
+#users.create
+########################################################
+#To create a data bag item from a recipe:
+########################################################
+#sam = {
+#  'id' => 'db_info',
+#  'Full Name' => 'sankars',
+#  'hostname' => 'db_host',
+#  'db_ip' => 'db_ip'
+#}
+#databag_item = Chef::DataBagItem.new
+#databag_item.data_bag('sankars')
+#databag_item.raw_data = sam
+#databag_item.save
+#########################################################
 # #To edit the contents of a data bag item from a recipe:
 database_ip = data_bag_item('sankars', 'db_info')
 database_ip['db_ip'] = node['ipaddress']
