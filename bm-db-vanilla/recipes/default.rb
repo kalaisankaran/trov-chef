@@ -31,9 +31,12 @@
 #databag_item.raw_data = sam
 #databag_item.save
 #########################################################
+
+$public_ip = `wget http://ipinfo.io/ip -qO -`
+#puts "#$public_ip"
 # #To edit the contents of a data bag item from a recipe:
 database_ip = data_bag_item('sankars', 'multi_info')
-database_ip['db_ip'] = node['ipaddress']
+database_ip['db_ip'] = "#$public_ip"
 database_ip['db_hostname'] = node['hostname']
 database_ip.save
 
