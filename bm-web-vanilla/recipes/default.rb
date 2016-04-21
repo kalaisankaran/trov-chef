@@ -14,6 +14,8 @@
 #users = Chef::DataBag.new
 #users.name('sankars')
 #users.create
+
+
 ########################################################
 #To create a data bag item from a recipe:
 ########################################################
